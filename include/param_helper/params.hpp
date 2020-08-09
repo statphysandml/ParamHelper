@@ -6,7 +6,6 @@
 #include <complex>
 #include <sys/file.h>
 #include <sys/stat.h>
-// #include <boost/filesystem.hpp>
 
 #include "json.hpp"
 #include "pathfinder.hpp"
@@ -27,12 +26,13 @@ namespace std {
 
 std::complex<double> complex_to_json(const json &j);
 
-
 bool fexists(const std::string& filename);
 
 json merge(const json &a, const json &b);
 
 json subtract(const json &a, const json &b);  // (a- b)
+
+bool construct_parameter_path(json& j, const std::string& parameter, std::vector<std::string>& parameter_path);
 
 // von Moriz? - vermutlich!?? -> ermöglicht auch die rekursive suche von parametern
 
@@ -70,7 +70,6 @@ auto recursive_find(json& j, UnaryFunction f)
     }
 }*/
 
-
 class Parameters {
 public:
     Parameters() = default;
@@ -83,9 +82,9 @@ public:
         return Parameters(params_);
     }
 
-    static Parameters create_by_file(const std::string& filename)
+    static Parameters create_by_file(const std::string& directory, const std::string& filename)
     {
-        return Parameters(read_parameter_file(filename));
+        return Parameters(read_parameter_file(directory, filename));
     }
 
     static std::string get_absolute_path(const std::string directory, const bool relative_path=true)
@@ -99,6 +98,7 @@ public:
     static bool check_if_parameter_file_exists(const std::string directory, const std::string filename, const bool relative_path=true)
     {
         std::string path = get_absolute_path(directory, relative_path);
+        std::cout << "Check for exsiting file " << filename <<".json in: " << path << std::endl;
         return fexists(path + "/" + filename + ".json");
     }
 
@@ -144,7 +144,7 @@ public:
     void append_parameters(const params_T parameters_wrapper)
     {
         json parameters_with_identifiers;
-        parameters_with_identifiers[parameters_wrapper.identifier()] = parameters_wrapper.get_json();
+        parameters_with_identifiers[parameters_wrapper.name()] = parameters_wrapper.get_json();
         params = merge(params, parameters_with_identifiers);
     }
 
@@ -153,7 +153,7 @@ public:
     {
         json parameters;
         parameters[global_identifier] = parameters_wrapper.get_json();
-        parameters[global_identifier]["name"] = parameters_wrapper.identifier();
+        parameters[global_identifier]["name"] = parameters_wrapper.name();
         params = merge(params, parameters);
     }
 
@@ -184,6 +184,7 @@ public:
         std::exit(EXIT_FAILURE);
     }
 
+    // Can probably be replaced by easier function-> params.value(key, default_val)
     template<typename T>
     T get_value_by_key(const std::string key, const T default_val) const
     {
@@ -194,7 +195,39 @@ public:
             return default_val;
     }
 
+    template<typename T>
+    T get_value_by_key(const std::string key, const T default_val, const bool set_default=true)
+    {
+        auto it_find = params.find(key);
+        if(it_find != params.end())
+            return it_find->get<T>();
+        else
+            if(set_default) add_entry(key, default_val);
+            return default_val;
+    }
+
+    bool haskey(const std::string key)
+    {
+        auto it_find = params.find(key);
+        return it_find != params.end();
+    }
+
+    template<typename T>
+    void add_entry(const std::string key, const T val)
+    {
+        params[key] = val;
+    }
+
+    void delete_entry(const std::string key)
+    {
+        params.erase(key);
+    }
+
     const json get_json() const {
+        return params;
+    }
+
+    json& get_json() {
         return params;
     }
 

@@ -7,6 +7,7 @@ bool fexists(const std::string& filename) {
     return (bool)ifile;
 }
 
+
 json merge(const json &a, const json &b)
 {
     json result = a.flatten();
@@ -19,6 +20,7 @@ json merge(const json &a, const json &b)
 
     return result.unflatten();
 }
+
 
 json subtract(const json &a, const json &b)  // (a- b)
 {
@@ -33,6 +35,36 @@ json subtract(const json &a, const json &b)  // (a- b)
     }
 
     return result.unflatten();
+}
+
+
+bool construct_parameter_path(json& j, const std::string& parameter, std::vector<std::string>& parameter_path)
+{
+    if(j.is_structured())
+    {
+        /* std::cout << "Dumping " << j.dump() << std::endl;
+        for(auto &elem: parameter_path)
+            std::cout << elem << " ";
+        std::cout << std::endl; */
+
+        if(j.find(parameter) != j.end()) {
+            parameter_path.insert(parameter_path.begin(), parameter);
+            return true;
+        }
+        else
+            for(auto it = j.begin(); it != j.end(); ++it)
+            {
+                bool actual_parameter_path = construct_parameter_path(*it, parameter, parameter_path);
+                if(actual_parameter_path)
+                {
+                    parameter_path.insert(parameter_path.begin(), it.key());
+                    return true;
+                }
+            }
+        return false; // nothing found
+    }
+    else
+        return false;
 }
 
 std::ostream& operator<< (std::ostream& os, const Parameters& params) {

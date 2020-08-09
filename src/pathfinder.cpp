@@ -1,6 +1,6 @@
 #include "../include/param_helper/pathfinder.hpp"
 
-# ToDo: Generalize
+// ToDo: Generalize
 
 std::string gcp() {
     char cCurrentPath[FILENAME_MAX];
@@ -16,7 +16,7 @@ std::string gcp() {
     // std::cout << cp << std::endl;
     return cp + "/..";
 
-    /* std::size_t found = cp.find("program"); // Findet den folder "program" und den entsprechenden path zurück
+    /* std::size_t found = cp.find("program"); // Findet den folder "program" und gibt den entsprechenden path zurück
     if (found != std::string::npos)
         return cp.erase(found + 7);
     else {
