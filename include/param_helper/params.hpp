@@ -119,7 +119,7 @@ public:
         std::ifstream i(path + "/" + filename + ".json");
         json k;
         i >> k;
-        std::cout << "Simulation file loaded" << std::endl;
+        std::cout << "Simulation file '" << filename << "' loaded" << std::endl;
         close(fd);
         return k;
     }
@@ -180,7 +180,7 @@ public:
         auto it_find = params.find(key);
         if(it_find != params.end())
             return it_find->get<T>();
-        std::cout << "ERROR: Parameter '" << key << "' not found" << std::endl;
+        std::cout << "ERROR: Parameter '" << key << "' not found. Check if parameter is set per default in corresponding class or set parameter manually." << std::endl;
         std::exit(EXIT_FAILURE);
     }
 
