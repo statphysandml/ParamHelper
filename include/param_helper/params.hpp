@@ -177,8 +177,14 @@ public:
     template<typename T>
     T get_value_by_key(const std::string key) const
     {
-        auto it_find = params.find(key);
-        if(it_find != params.end())
+        return value_by_key<T>(params, key);
+    }
+
+    template<typename T>
+    static T value_by_key(const json& params_, const std::string key)
+    {
+        auto it_find = params_.find(key);
+        if(it_find != params_.end())
             return it_find->get<T>();
         std::cout << "ERROR: Parameter '" << key << "' not found. Check if parameter is set per default in corresponding class or set parameter manually." << std::endl;
         std::exit(EXIT_FAILURE);
