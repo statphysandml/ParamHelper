@@ -9,9 +9,13 @@
 
 class Fileos {
 public:
-    explicit Fileos(std::string fname) : os{} {
-        os.open(fname);
+    explicit Fileos(std::string fname, bool append=false) : os{} {
+        if (append)
+            os.open(fname, std::ios_base::app);
+        else
+            os.open(fname);
     }
+
     ~Fileos() {os.close();}
 
     std::ofstream *operator->() {return &os;}
