@@ -1,4 +1,3 @@
 .idea/
 lib/*
 !lib/README.txt
-CMakeLists.txt
