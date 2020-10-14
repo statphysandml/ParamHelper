@@ -208,8 +208,10 @@ public:
         if(it_find != params.end())
             return it_find->get<T>();
         else
+        {
             if(set_default) add_entry(key, default_val);
-            return default_val;
+                return default_val;
+        }
     }
 
     bool haskey(const std::string key)
