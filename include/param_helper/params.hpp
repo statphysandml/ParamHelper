@@ -90,7 +90,7 @@ public:
     static std::string get_absolute_path(const std::string directory, const bool relative_path=true)
     {
         if(relative_path)
-            return gcp() + directory;
+            return gcp() + "/" + directory + "/";
         else
             return directory;
     }
