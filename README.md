@@ -1,7 +1,7 @@
 ParamHelper: Track your simulation
 ==================================
 
-ParamHelper is a C++ library that allows an easy tracking of all parameters of a simulation. The parameters can easily be written to file and be loaded for a potential rerun of the simulation. An example provides a possible usage of the library. The core of the library makes use of JSON for Modern C++ from https://github.com/nlohmann/json. A management of the parameters takes place based on json files.
+ParamHelper is a C++ library that allows an easy tracking of all parameters of a simulation. The parameters can easily be written to file and be loaded for a potential rerun of the simulation. An example provides a possible usage of the library. The core of the library makes use of JSON for Modern C++ from https://github.com/nlohmann/json. The parameters a managed based on json object.
 
 Use Case
 --------
@@ -23,8 +23,8 @@ public:
                                                       width(get_entry<double>("width", 1.0))
     {}
 
-    explicit RectangleParameters(const double length_=1.0, const double width_=1.0) : RectangleParameters(
-            json {{"length", length_}, {"width", width_}})
+    explicit RectangleParameters(const double length_=1.0, const double width_=1.0) :
+        RectangleParameters(json {{"length", length_}, {"width", width_}})
     {}
 
     static std::string name()
@@ -58,23 +58,28 @@ private:
     const RectangleParameters rp;
 };
 ```
-Access on the parameters is provided via the rp. The class Reactangle can be used as follows:
+Access on the parameters is provided by the member variable rp. The class Reactangle can be used as follows:
 ```c++
+// The project root can be adapted by params_helper::prfs::set_relative_path_to_project_root_dir
 std::cout << "Current directory: " << param_helper::fs::prfs::project_root() << std::endl;
 
 // Generate parameters and write them to file
 RectangleParameters rp(2.0, 3.0);
-param_helper::fs::generate_directory_if_not_present("parameters", true); // relative to the project_root
+// Generates the directory parameters/ relative to the project_root
+param_helper::fs::generate_directory_if_not_present("parameters", true);
 rp.write_to_file("parameters", "rectangle_parameters", true);
 
-// Reload the parameters
-param_helper::fs::check_if_parameter_file_exists("parameters", "rectangular_parameters"); // optional
+// Optional
+param_helper::fs::check_if_parameter_file_exists("parameters", "rectangular_parameters");
 
+// Reload the parameters
 auto params2 = Parameters::create_by_file("parameters", "rectangle_parameters");
 RectangleParameters rp2(params2.get_json());
 
 // Alternative way
-RectangleParameters rp3(param_helper::fs::read_parameter_file("parameters", "rectangle_parameters", true));
+RectangleParameters rp3(
+    param_helper::fs::read_parameter_file("parameters", "rectangle_parameters", true)
+);
 
 // Generate object with respective parameters
 Rectangle rectangle2(rp3);
@@ -122,7 +127,9 @@ Further Examples
 
 The library also provides an easy way to combine several parameter files
 ```c++
-Parameters project_params = Parameters::create_by_params(json {{"name", "project_a"}, {"details", "rectangle_analysis"}});
+Parameters project_params = Parameters::create_by_params(
+    json {{"name", "project_a"}, {"details", "rectangle_analysis"}}
+);
 
 RectangleParameters rp_analysis(2.0, 3.0);
 project_params.append_parameters(rp_analysis);
@@ -131,7 +138,9 @@ param_helper::fs::generate_directory_if_not_present("project", true);
 project_params.write_to_file("project", "rectangle_analysis", true);
 
 // Add additional_project parameters to the already existing project file based on the given path
-Parameters additional_project_params = Parameters::create_by_params(json {{"type", "type_b"}, {"n", "100"}});
+Parameters additional_project_params = Parameters::create_by_params(
+    json {{"type", "type_b"}, {"n", "100"}}
+);
 additional_project_params.merge_to_file("project", "rectangle_analysis", true);
 
 // Reload updated parameters
@@ -161,7 +170,9 @@ Examples for using the base class Parameter. The class Parameter is a wrapper to
 #include "param_helper/params.hpp"
 using namespace param_helper::params;
 
-Parameters params = Parameters::create_by_params(json {{"a", 0}, {"vec", std::vector<double> {0.0, 1.0}}});
+Parameters params = Parameters::create_by_params(
+    json {{"a", 0}, {"vec", std::vector<double> {0.0, 1.0}}}
+);
 params.add_entry("c", "c");
 
 std::cout << "Parameters: " << params << std::endl;
