@@ -3,7 +3,7 @@ ParamHelper: Track your simulation
 
 ParamHelper is a C++ library that allows an easy tracking of all parameters of a simulation. The parameters can easily be written to file and be loaded for a potential rerun of the simulation. An example provides a possible usage of the library. The core of the library makes use of JSON for Modern C++ from https://github.com/nlohmann/json. A management of the parameters takes place based on json files.
 
-Examples
+Use Case
 --------
 
 Possible usages of the library can be best understood through examples. More detailed examples can also be found in the examples/ directory.
@@ -91,6 +91,32 @@ In the example, a json file "rectangle_parameters.json" has been stored in the d
 
 ```
 
+Build
+-----
+
+The library can be easily build by
+```bash
+cd build
+bash build.sh
+```
+
+Usage
+-----
+
+g++:
+```bash
+g++ main.cpp -I {path-to-ParamHelper/include/} {path-to-ParamHelper/lib/libparamhelper.a} -o main
+```
+
+cmake (CMakeLists.txt):
+```cmake
+find_library(ParamHelper NAMES libparamhelper.a PATHS {path-to-ParamHelper/lib/`)
+include_directories(/home/lukas/ParamHelper/include/)
+target_link_libraries(MAIN ${ParamHelper})
+```
+
+Further Examples
+----------------
 
 The library also provides an easy way to combine several parameter files
 ```c++
@@ -111,6 +137,7 @@ auto updated_project_params = Parameters::create_by_file("project", "rectangle_a
 std::cout << "Updated project params " << updated_project_params << std::endl;
 ```
 A folder "project" has been created that contains a "rectangle_analysis.json" file, that contains also the rectangle parameters:
+```json
 {
     "Rectangle": {
         "length": 2.0,
@@ -124,7 +151,7 @@ A folder "project" has been created that contains a "rectangle_analysis.json" fi
 ```
 
 
-Simple example for using the base class Parameter. The class Parameter is a wrapper to manage access and further functions on a nohlmann::json object.
+Examples for using the base class Parameter. The class Parameter is a wrapper to manage access and further functions on a nohlmann::json object.
 
 
 ```c++
