@@ -110,13 +110,15 @@ g++ main.cpp -I {path-to-ParamHelper/include/} {path-to-ParamHelper/lib/libparam
 
 cmake (CMakeLists.txt):
 ```cmake
-find_library(ParamHelper NAMES libparamhelper.a PATHS {path-to-ParamHelper/lib/`)
-include_directories(/home/lukas/ParamHelper/include/)
+find_library(ParamHelper NAMES libparamhelper.a PATHS {path-to-ParamHelper/lib/`})
+include_directories({path-to-ParamHelper/include/})
 target_link_libraries(MAIN ${ParamHelper})
 ```
 
 Further Examples
 ----------------
+
+### Use case with multiple parameters
 
 The library also provides an easy way to combine several parameter files
 ```c++
@@ -150,6 +152,7 @@ A folder "project" has been created that contains a "rectangle_analysis.json" fi
 }
 ```
 
+### The Parameter class
 
 Examples for using the base class Parameter. The class Parameter is a wrapper to manage access and further functions on a nohlmann::json object.
 
@@ -176,6 +179,8 @@ params.delete_entry("b");
 json params_json = params.get_json();
 std::cout << "\nParams json object: " << params_json << "\n" << std::endl;
 ```
+
+### Manipulating json objects
 
 Manipulation of json objects (merge and subtract)
 
