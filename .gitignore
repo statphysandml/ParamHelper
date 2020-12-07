@@ -1,3 +1,9 @@
 .idea/
 lib/*
 !lib/README.txt
+examples/*
+!examples/all_examples.cpp
+!examples/manipulation.cpp
+!examples/parameters.cpp
+!examples/use_case.cpp
+!examples/use_case_multiple_parameters.cpp

@@ -4,8 +4,8 @@ project(ParamHelper)
 set(CMAKE_CXX_STANDARD 14)
 
 add_library(paramhelper STATIC
-        src/params.cpp
-        src/pathfinder.cpp)
+        src/filesystem.cpp
+        src/params.cpp)
 
 
 # CMake instructions to test using the static lib
