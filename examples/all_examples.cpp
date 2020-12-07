@@ -53,48 +53,6 @@ private:
 
 
 int main() {
-    //[ Parameter class
-
-    std::cout << "\n### The Paramter class ###\n" << std::endl;
-
-    Parameters params = Parameters::create_by_params(json {{"a", 0}, {"vec", std::vector<double> {0.0, 1.0}}});
-    params.add_entry("c", "c");
-
-    std::cout << "Parameters: " << params << std::endl;
-
-    auto a = params.get_entry<double>("a");
-    auto b = params.get_entry<double>("b", 1.0, true);
-    std::cout << "Extracted parameters: a " << a << " " << "b " << b << "\n" << std::endl;
-
-    std::cout << "Parameters after querying for b: " << params << std::endl;
-
-    std::cout << "Looking for parameter b: " << params.haskey("b") << std::endl;
-
-    // Delete entry with "b"
-    params.delete_entry("b");
-    std::cout << "Looking for parameter b after delete: " << params.haskey("b") << std::endl;
-
-    // Get raw nohlmann json file
-    json params_json = params.get_json();
-    std::cout << "\nParams json object: " << params_json << "\n" << std::endl;
-
-    //]
-
-    //[ Manipulation
-
-    std::cout << "\n### Manipulating json objects ###\n" << std::endl;
-
-    json additional_parameters = {{"e", 0.0}, {"f", std::complex<double> {1.0, 1.0}}};
-    std::cout << "Additional parameters " << additional_parameters << std::endl;
-
-    params_json = merge(params_json, additional_parameters);
-    std::cout << "Params json after merging" << params_json << std::endl;
-
-    params_json = subtract(params_json, additional_parameters);
-    std::cout << "Params json after subtraction" << params_json << "\n" << std::endl;
-
-    //]
-
     //[Use case
 
     std::cout << "\n### Actual use case with file system exchange ###\n" << std::endl;
@@ -144,5 +102,48 @@ int main() {
     auto updated_project_params = Parameters::create_by_file("project", "rectangle_analysis");
     std::cout << "Updated project params " << updated_project_params << std::endl;
 
+    //]
+
+    //[ Parameter class
+
+    std::cout << "\n### The Paramter class ###\n" << std::endl;
+
+    Parameters params = Parameters::create_by_params(json {{"a", 0}, {"vec", std::vector<double> {0.0, 1.0}}});
+    params.add_entry("c", "c");
+
+    std::cout << "Parameters: " << params << std::endl;
+
+    auto a = params.get_entry<double>("a");
+    auto b = params.get_entry<double>("b", 1.0, true);
+    std::cout << "Extracted parameters: a " << a << " " << "b " << b << "\n" << std::endl;
+
+    std::cout << "Parameters after querying for b: " << params << std::endl;
+
+    std::cout << "Looking for parameter b: " << params.haskey("b") << std::endl;
+
+    // Delete entry with "b"
+    params.delete_entry("b");
+    std::cout << "Looking for parameter b after delete: " << params.haskey("b") << std::endl;
+
+    // Get raw nohlmann json file
+    json params_json = params.get_json();
+    std::cout << "\nParams json object: " << params_json << "\n" << std::endl;
+
+    //]
+
+    //[ Manipulation
+
+    std::cout << "\n### Manipulating json objects ###\n" << std::endl;
+
+    json additional_parameters = {{"e", 0.0}, {"f", std::complex<double> {1.0, 1.0}}};
+    std::cout << "Additional parameters " << additional_parameters << std::endl;
+
+    params_json = merge(params_json, additional_parameters);
+    std::cout << "Params json after merging" << params_json << std::endl;
+
+    params_json = subtract(params_json, additional_parameters);
+    std::cout << "Params json after subtraction" << params_json << "\n" << std::endl;
+
+    //]
     return 0;
 }
