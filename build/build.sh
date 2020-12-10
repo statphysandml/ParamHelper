@@ -1,7 +1,7 @@
 #!/bin/bash
 
 cd ..
-mkdir lib
+mkdir -p lib
 cd lib
 
 cmake ..
