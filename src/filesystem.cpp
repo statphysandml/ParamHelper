@@ -7,7 +7,7 @@
 namespace param_helper {
     namespace fs {
 
-        std::string prfs::relative_path_to_project_root_dir = "/";
+        std::string prfs::relative_path_to_project_root_dir = "./";
 
         std::string prfs::project_root() {
             char cCurrentPath[FILENAME_MAX];
@@ -21,7 +21,7 @@ namespace param_helper {
             std::string cp = std::string(cCurrentPath);
 
             // std::cout << cp << std::endl;
-            return cp + relative_path_to_project_root_dir;
+            return cp + "/" + relative_path_to_project_root_dir;
         }
 
         void prfs::set_relative_path_to_project_root_dir(const std::string relative_path_to_project_root_dir_) {
