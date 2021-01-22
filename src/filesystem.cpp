@@ -46,7 +46,7 @@ namespace param_helper {
         }
 
         bool direxists(const std::string& path) {
-            struct stat sb;
+            struct stat sb{};
             if (stat(path.c_str(), &sb) != 0 && !S_ISDIR(sb.st_mode))
                 return false;
             else
@@ -55,19 +55,24 @@ namespace param_helper {
 
         void makedir(const std::string& path)
         {
-            std::cout << "Generate directory: " << path << std::endl;
-            const int dir_err = mkdir(path.c_str(), S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
-            if (-1 == dir_err)
-            {
-                printf("Error creating directory!\n");
-                exit(1);
+            // Check if parent path exists
+            std::size_t found = path.find_last_of("/\\");
+            if(not direxists(path.substr(0, found)))
+                makedir(path.substr(0, found));
+
+            if(not direxists(path)) {
+                std::cout << "Generate directory: " << path << std::endl;
+                // Generate directory
+                const int dir_err = mkdir(path.c_str(), S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
+                if (-1 == dir_err) {
+                    printf("Error creating directory!\n");
+                    exit(1);
+                }
             }
         }
 
         void generate_directory_if_not_present(const std::string directory, const bool relative_path)
         {
-            // ToDo: Add recurive method to generate path
-
             std::string path = prfs::get_path_to(directory, relative_path);
 
             if(not direxists(path))

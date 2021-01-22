@@ -200,3 +200,10 @@ json additional_parameters = {{"e", 0.0}, {"f", std::complex<double> {1.0, 1.0}}
 params_json = merge(params_json, additional_parameters);
 params_json = subtract(params_json, additional_parameters);
 ```
+
+Support and development
+----------------------
+
+For bug reports/suggestions/complaints please file an issue on GitHub.
+
+Or start a discussion on our mailing list: statphysandml@thphys.uni-heidelberg.de
