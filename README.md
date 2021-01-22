@@ -201,7 +201,7 @@ params_json = merge(params_json, additional_parameters);
 params_json = subtract(params_json, additional_parameters);
 ```
 
-Support and development
+Support and Development
 ----------------------
 
 For bug reports/suggestions/complaints please file an issue on GitHub.
