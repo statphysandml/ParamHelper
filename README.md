@@ -18,25 +18,25 @@ using namespace param_helper::params;
 class RectangleParameters : public Parameters
 {
 public:
-    explicit RectangleParameters(const json params) : Parameters(params),
-                                                      length(get_entry<double>("length", 1.0)),
-                                                      width(get_entry<double>("width", 1.0))
-    {}
+explicit RectangleParameters(const json params) : Parameters(params),
+length(get_entry<double>("length", 1.0)),
+width(get_entry<double>("width", 1.0))
+{}
 
-    explicit RectangleParameters(const double length_=1.0, const double width_=1.0) :
-        RectangleParameters(json {{"length", length_}, {"width", width_}})
-    {}
+explicit RectangleParameters(const double length_=1.0, const double width_=1.0) :
+RectangleParameters(json {{"length", length_}, {"width", width_}})
+{}
 
-    static std::string name()
-    {
-        return "Rectangle";
-    }
+static std::string name()
+{
+return "Rectangle";
+}
 
 private:
-    friend class Rectangle;
+friend class Rectangle;
 
-    double length;
-    double width;
+double length;
+double width;
 };
 ```
 
@@ -46,16 +46,16 @@ class Rectangle
 {
 public:
 
-    explicit Rectangle(const RectangleParameters rp_) : rp(rp_)
-    {}
+explicit Rectangle(const RectangleParameters rp_) : rp(rp_)
+{}
 
-    double get_area() const
-    {
-        return rp.length * rp.width;
-    }
+double get_area() const
+{
+return rp.length * rp.width;
+}
 
 private:
-    const RectangleParameters rp;
+const RectangleParameters rp;
 };
 ```
 Access on the parameters is provided by the member variable rp. The class Reactangle can be used as follows:
@@ -78,7 +78,7 @@ RectangleParameters rp2(params2.get_json());
 
 // Alternative way
 RectangleParameters rp3(
-    param_helper::fs::read_parameter_file("parameters", "rectangle_parameters", true)
+param_helper::fs::read_parameter_file("parameters", "rectangle_parameters", true)
 );
 
 // Generate object with respective parameters
@@ -90,8 +90,8 @@ std::cout << "\nCompute rectangle area: " << rectangle2.get_area() << "\n" << st
 In the example, a json file "rectangle_parameters.json" has been stored in the directory "parameters":
 ```json
 {
-    "length": 2.0,
-    "width": 3.0
+  "length": 2.0,
+  "width": 3.0
 }
 
 ```
@@ -128,7 +128,7 @@ Further Examples
 The library also provides an easy way to combine several parameter files
 ```c++
 Parameters project_params = Parameters::create_by_params(
-    json {{"name", "project_a"}, {"details", "rectangle_analysis"}}
+json {{"name", "project_a"}, {"details", "rectangle_analysis"}}
 );
 
 RectangleParameters rp_analysis(2.0, 3.0);
@@ -139,7 +139,7 @@ project_params.write_to_file("project", "rectangle_analysis", true);
 
 // Add additional_project parameters to the already existing project file based on the given path
 Parameters additional_project_params = Parameters::create_by_params(
-    json {{"type", "type_b"}, {"n", "100"}}
+json {{"type", "type_b"}, {"n", "100"}}
 );
 additional_project_params.merge_to_file("project", "rectangle_analysis", true);
 
@@ -150,14 +150,14 @@ std::cout << "Updated project params " << updated_project_params << std::endl;
 A folder "project" has been created that contains a "rectangle_analysis.json" file, that contains also the rectangle parameters:
 ```json
 {
-    "Rectangle": {
-        "length": 2.0,
-        "width": 3.0
-    },
-    "details": "rectangle_analysis",
-    "n": "100",
-    "name": "project_a",
-    "type": "type_b"
+  "Rectangle": {
+    "length": 2.0,
+    "width": 3.0
+  },
+  "details": "rectangle_analysis",
+  "n": "100",
+  "name": "project_a",
+  "type": "type_b"
 }
 ```
 
@@ -171,7 +171,7 @@ Examples for using the base class Parameter. The class Parameter is a wrapper to
 using namespace param_helper::params;
 
 Parameters params = Parameters::create_by_params(
-    json {{"a", 0}, {"vec", std::vector<double> {0.0, 1.0}}}
+json {{"a", 0}, {"vec", std::vector<double> {0.0, 1.0}}}
 );
 params.add_entry("c", "c");
 
@@ -207,3 +207,46 @@ Support and Development
 For bug reports/suggestions/complaints please file an issue on GitHub.
 
 Or start a discussion on our mailing list: statphysandml@thphys.uni-heidelberg.de
+
+
+
+# Welcome to ParamHelper
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/statphysandml/ParamHelper/CI)](https://github.com/statphysandml/ParamHelper/actions?query=workflow%3ACI)
+[![Documentation Status](https://readthedocs.org/projects/ParamHelper/badge/)](https://ParamHelper.readthedocs.io/)
+[![codecov](https://codecov.io/gh/statphysandml/ParamHelper/branch/main/graph/badge.svg)](https://codecov.io/gh/statphysandml/ParamHelper)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=statphysandml_ParamHelper&metric=alert_status)](https://sonarcloud.io/dashboard?id=statphysandml_ParamHelper)
+
+# Prerequisites
+
+Building ParamHelper requires the following software installed:
+
+* A C++14-compliant compiler
+* CMake `>= 3.9`
+* Doxygen (optional, documentation building is skipped if missing)
+* The testing framework [Catch2](https://github.com/catchorg/Catch2) for building the test suite
+
+# Building ParamHelper
+
+The following sequence of commands builds ParamHelper.
+It assumes that your current working directory is the top-level directory
+of the freshly cloned repository:
+
+```
+mkdir build
+cd build
+cmake -DCMAKE_BUILD_TYPE=Release ..
+cmake --build .
+```
+
+The build process can be customized with the following CMake variables,
+which can be set by adding `-D<var>={ON, OFF}` to the `cmake` call:
+
+* `BUILD_TESTING`: Enable building of the test suite (default: `ON`)
+* `BUILD_DOCS`: Enable building the documentation (default: `ON`)
+
+# Documentation
+
+ParamHelper provides a Sphinx-based documentation, that can
+be browsed [online at readthedocs.org](https://ParamHelper.readthedocs.io).

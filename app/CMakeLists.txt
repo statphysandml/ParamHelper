@@ -1,0 +1,2 @@
+add_executable(ParamHelper_app ParamHelper_app.cpp)
+target_link_libraries(ParamHelper_app PRIVATE ParamHelper)
