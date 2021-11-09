@@ -17,7 +17,7 @@ Building ParamHelper requires the following software installed:
 * A C++14-compliant compiler
 * CMake `>= 3.9`
 * Doxygen (optional, documentation building is skipped if missing)
-* The testing framework [Catch2](https://github.com/catchorg/Catch2) for building the test suite
+<!--- * The testing framework [Catch2](https://github.com/catchorg/Catch2) for building the test suite. The framework is included as an external submodule which can be integrated by cloning the respository with -->
 
 Building ParamHelper
 --------
@@ -27,6 +27,7 @@ It assumes that your current working directory is the top-level directory
 of the freshly cloned repository:
 
 ```
+git submodule update --init --recursive
 mkdir build
 cd build
 cmake -DCMAKE_BUILD_TYPE=Release ..
@@ -238,8 +239,8 @@ params_json = subtract(params_json, additional_parameters);
 Support and Development
 ----------------------
 
-The project was generated with the help of the [cookiecutter-cpp-project](https://github.com/ssciwr/cookiecutter-cpp-project) of the [Scientific Software Center, IWR, Heidelberg University](https://ssc.iwr.uni-heidelberg.de/)
+The project was generated with the help of the [cookiecutter-cpp-project](https://github.com/ssciwr/cookiecutter-cpp-project) of the [Scientific Software Center, IWR, Heidelberg University](https://ssc.iwr.uni-heidelberg.de/).
 
 For bug reports/suggestions/complaints please file an issue on GitHub.
 
-Or start a discussion on our mailing list: statphysandml@thphys.uni-heidelberg.de
+Or start a discussion on our mailing list: statphysandml@thphys.uni-heidelberg.de.
