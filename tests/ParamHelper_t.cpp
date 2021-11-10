@@ -1,4 +1,4 @@
-#include "ParamHelper/ParamHelper.hpp"
+#include "param_helper/ParamHelper.hpp"
 #include "catch2/catch.hpp"
 
 using namespace ParamHelper;

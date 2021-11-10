@@ -2,7 +2,7 @@
 // Created by lukas on 28.11.20.
 //
 
-#include "../include/ParamHelper/filesystem.hpp"
+#include "../include/param_helper/filesystem.hpp"
 
 namespace param_helper {
     namespace fs {

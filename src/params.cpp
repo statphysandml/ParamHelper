@@ -1,4 +1,4 @@
-#include "../include/ParamHelper/params.hpp"
+#include "../include/param_helper/params.hpp"
 
 namespace param_helper {
     namespace params {

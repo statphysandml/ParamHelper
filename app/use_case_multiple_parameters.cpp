@@ -2,7 +2,7 @@
 // Created by lukas on 07.12.20.
 //
 
-#include "ParamHelper/params.hpp"
+#include "param_helper/params.hpp"
 
 
 using namespace param_helper::params;
