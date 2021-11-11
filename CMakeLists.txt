@@ -36,11 +36,11 @@ if(BUILD_DOCS)
 endif()
 
 # Add an alias target for use if this project is included as a subproject in another project
-add_library(ParamHelper::ParamHelper ALIAS ParamHelper)
+add_library(paramhelper::paramhelper ALIAS paramhelper)
 
 # Install targets and configuration
 install(
-  TARGETS ParamHelper
+  TARGETS paramhelper
   EXPORT ParamHelper-config
   RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
   LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
