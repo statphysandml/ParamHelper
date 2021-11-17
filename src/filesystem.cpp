@@ -9,7 +9,7 @@ namespace param_helper {
 
         std::string prfs::relative_path_to_project_root_dir = "./";
 
-        std::string prfs::project_root() {
+        std::string prfs::path_to_executable() {
             char cCurrentPath[FILENAME_MAX];
 
             if (!GetCurrentDir(cCurrentPath, sizeof(cCurrentPath)))
@@ -21,7 +21,11 @@ namespace param_helper {
             std::string cp = std::string(cCurrentPath);
 
             // std::cout << cp << std::endl;
-            return cp + "/" + relative_path_to_project_root_dir;
+            return cp;
+        }
+
+        std::string prfs::project_root() {
+            return path_to_executable() + "/" + relative_path_to_project_root_dir;
         }
 
         void prfs::set_relative_path_to_project_root_dir(const std::string relative_path_to_project_root_dir_) {

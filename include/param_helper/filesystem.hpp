@@ -29,6 +29,8 @@ namespace param_helper
         {
             static std::string relative_path_to_project_root_dir;
 
+            static std::string path_to_executable();
+
             static std::string project_root();
 
             static void set_relative_path_to_project_root_dir(const std::string relative_path_to_project_root_dir_);
