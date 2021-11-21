@@ -181,3 +181,4 @@ examples/*
 !examples/parameters.cpp
 !examples/use_case.cpp
 !examples/use_case_multiple_parameters.cpp
+!examples/CMakeLists.txt

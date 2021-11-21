@@ -1,2 +1,0 @@
-add_executable(ParamHelperExamples param_helper_examples.cpp)
-target_link_libraries(ParamHelperExamples PRIVATE paramhelper)

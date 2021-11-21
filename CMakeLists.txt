@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.9)
+cmake_minimum_required(VERSION 3.15)
 
 # Set a name and a version number for your project:
 project(ParamHelper VERSION 0.0.1 LANGUAGES CXX)
@@ -18,9 +18,6 @@ set(BUILD_DOCS ON CACHE BOOL "Enable building of documentation")
 # compile the library
 add_subdirectory(src)
 
-
-# compile the application
-add_subdirectory(app)
 
 # compile the tests
 include(CTest)
