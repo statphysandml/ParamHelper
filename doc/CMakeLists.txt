@@ -18,5 +18,4 @@ add_custom_target(paramhelper-sphinx-doc
                   COMMENT "Generating documentation with Sphinx..."
                   )
 
-# Here might be some changes regarding doxygen and paramhelper_doxygen necessary
-add_dependencies(paramhelper-sphinx-doc doxygen)
+add_dependencies(paramhelper-sphinx-doc paramhelper_doxygen)
