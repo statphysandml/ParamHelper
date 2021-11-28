@@ -1,9 +1,9 @@
 ParamHelper: Track your simulation
 ==================================
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+<!--- [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![GitHub Workflow Status](https://img.shields.io/github/workflow/status/statphysandml/ParamHelper/CI)](https://github.com/statphysandml/ParamHelper/actions?query=workflow%3ACI))
-<!--- ([![Documentation Status](https://readthedocs.org/projects/ParamHelper/badge/)](https://ParamHelper.readthedocs.io/)
+([![Documentation Status](https://readthedocs.org/projects/ParamHelper/badge/)](https://ParamHelper.readthedocs.io/)
 [![codecov](https://codecov.io/gh/statphysandml/ParamHelper/branch/main/graph/badge.svg)](https://codecov.io/gh/statphysandml/ParamHelper)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=statphysandml_ParamHelper&metric=alert_status)](https://sonarcloud.io/dashboard?id=statphysandml_ParamHelper) -->
 
