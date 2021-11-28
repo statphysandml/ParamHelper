@@ -1,12 +1,17 @@
-#include "param_helper/ParamHelper.hpp"
+#include <param_helper/params.hpp>
 #include "catch2/catch.hpp"
-
-using namespace ParamHelper;
 
 // ToDo: To be continued...
 
-/*TEST_CASE( "add_one", "[adder]" ){
-  REQUIRE(add_one(0) == 1);
-  REQUIRE(add_one(123) == 124);
-  REQUIRE(add_one(-1) == 0);
-} */
+using namespace param_helper::params;
+
+
+TEST_CASE( "add_and_get_entry", "[parameters]" ){
+  Parameters params = Parameters::create_by_params(json {{"a", 0}, {"vec", std::vector<double> {0.0, 1.0}}});
+
+  REQUIRE(params.get_entry<double>("a") == 0);
+
+  params.add_entry("c", "test_c");
+
+  REQUIRE(params.get_entry<std::string>("c") == "test_c");
+}

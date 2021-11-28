@@ -14,6 +14,15 @@ using json = nlohmann::json;
 
 namespace param_helper {
     namespace params {
+
+        /** @brief Merge function
+         *
+         * To be continued...
+         *
+         * @param a ...
+         * @param b ...
+         * @returns ...
+         */
         json merge(const json &a, const json &b);
 
         json subtract(const json &a, const json &b);  // (a- b)
