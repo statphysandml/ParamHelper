@@ -7,7 +7,7 @@ ParamHelper: Track your simulation
 [![codecov](https://codecov.io/gh/statphysandml/ParamHelper/branch/main/graph/badge.svg)](https://codecov.io/gh/statphysandml/ParamHelper)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=statphysandml_ParamHelper&metric=alert_status)](https://sonarcloud.io/dashboard?id=statphysandml_ParamHelper) -->
 
-ParamHelper is a C++ library that allows an easy tracking of all parameters of a simulation. The parameters can easily be written to file and be loaded for a potential rerun of the simulation. An example provides a possible usage of the library. The core of the library makes use of JSON for Modern C++ from https://github.com/nlohmann/json. The parameters a managed based on json object.
+ParamHelper is a C++ library that allows an easy tracking of all parameters of a simulation. The parameters can easily be written to file and be loaded for a potential rerun of the simulation. An example provides a possible usage of the library. The core of the library makes use of JSON for Modern C++ from https://github.com/nlohmann/json.
 
 Prerequisites
 --------
