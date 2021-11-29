@@ -50,9 +50,25 @@ be browsed [online at readthedocs.org](https://ParamHelper.readthedocs.io). -->
 Examples
 --------
 
-Possible use cases of the library can be best understood through examples. More detailed examples can also be found in the examples/ directory.
+Possible use cases of the library can be best understood through examples, which can be found in the examples/ directory. After a navigation into the this directory, the following sequence of commands builds the ParamHelperExamples executable (based on param_helper_examples.cpp) containing all other examples as well. The other examples can be executed by replacing the cpp file in the CMakeLists.txt file.
 
-Use case: We want to manange the parameters of a class Rectangle that can be used to compute the are of rectangle
+```
+mkdir build
+cd build
+cmake -DCMAKE_BUILD_TYPE=Release ..
+cmake --build .
+```
+
+The code can be executed by running
+
+```
+./ParamHelperExamples
+```
+
+The example is explained in the following in more detail.
+
+Use case: We want to manange the parameters of a class Rectangle that can be used to compute the area of a rectangle.
+
 
 The class RectangleParameter contains all parameters that are supossed to be tracked:
 ```c++
