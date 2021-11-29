@@ -5,6 +5,6 @@ ParamHelper
    :maxdepth: 2
    :caption: Contents:
 
-This is an example function..to be continued:
+Will follow...
 
 .. doxygenfunction:: ParamHelper::ToBeContinued
