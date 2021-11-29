@@ -176,7 +176,7 @@ cython_debug/
 lib/*
 !lib/README.txt
 examples/*
-!examples/all_examples.cpp
+!examples/param_helper_examples.cpp
 !examples/manipulation.cpp
 !examples/parameters.cpp
 !examples/use_case.cpp
