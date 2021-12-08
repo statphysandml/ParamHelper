@@ -65,7 +65,7 @@ namespace param_helper {
                 makedir(path.substr(0, found));
 
             if(not direxists(path)) {
-                std::cout << "Generate directory: " << path << std::endl;
+                // std::cout << "Generate directory: " << path << std::endl;
                 // Generate directory
                 const int dir_err = mkdir(path.c_str(), S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
                 if (-1 == dir_err) {
@@ -86,7 +86,7 @@ namespace param_helper {
         bool check_if_parameter_file_exists(const std::string directory, const std::string filename, const bool relative_path)
         {
             std::string path = prfs::get_path_to(directory, relative_path);
-            std::cout << "Check for existence of " << filename << ".json in: " << path << std::endl;
+            // std::cout << "Check for existence of " << filename << ".json in: " << path << std::endl;
             return fexists(path + "/" + filename + ".json");
         }
 
@@ -101,7 +101,7 @@ namespace param_helper {
             struct stat sb;
             if (stat((path + "/" + filename + ".json").c_str(), &sb) != 0)
             {
-                std::cout << "File does not exist: " << path + "/" + filename + ".json" << std::endl;
+                std::cerr << "File does not exist: " << path + "/" + filename + ".json" << std::endl;
                 std::exit(EXIT_FAILURE);
             }
             std::ifstream i(path + "/" + filename + ".json");
@@ -115,9 +115,9 @@ namespace param_helper {
         void write_parameter_file(json parameters, const std::string directory, const std::string filename, const bool relative_path)
         {
             std::string path = prfs::get_path_to(directory, relative_path);
-            std::cout << "Writing parameter file into:" << path << std::endl;
+            // std::cout << "Writing parameter file into:" << path << std::endl;
 
-            std::cout << "\t-> Parameters: " << parameters << std::endl;
+            // std::cout << "\t-> Parameters: " << parameters << std::endl;
 
             std::ofstream o(path + filename + ".json");
             o << std::setw(4) << parameters << std::endl;

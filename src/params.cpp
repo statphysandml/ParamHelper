@@ -2,7 +2,8 @@
 
 namespace param_helper {
     namespace params {
-
+        
+        // Only works for dictionary like json files -> not for lists or arrays
         json merge(const json &a, const json &b)
         {
             json result = a.flatten();
@@ -16,7 +17,7 @@ namespace param_helper {
             return result.unflatten();
         }
 
-
+        // Only works for dictionary like json files -> not for lists or arrays
         json subtract(const json &a, const json &b)  // (a- b)
         {
             json result = a.flatten();

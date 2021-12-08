@@ -25,6 +25,16 @@ namespace param_helper {
          */
         json merge(const json &a, const json &b);
 
+        template<typename T>
+        json merge_list_like(const json&a, const json &b)
+        {
+            auto a_vec = a.get<std::vector<T>>();
+            auto b_vec = b.get<std::vector<T>>();
+            a_vec.insert(a_vec.end(), b_vec.begin(), b_vec.end());
+            auto merged_json = json(a_vec);
+            return merged_json;
+        }
+
         json subtract(const json &a, const json &b);  // (a- b)
 
         bool construct_parameter_path(json &j, const std::string &parameter, std::vector<std::string> &parameter_path);
@@ -34,7 +44,7 @@ namespace param_helper {
             auto it_find = params_.find(key);
             if (it_find != params_.end())
                 return it_find->get<T>();
-            std::cout << "ERROR: Parameter '" << key
+            std::cerr << "ERROR: Parameter '" << key
                       << "' not found. Check if parameter is set per default in corresponding class or set parameter manually."
                       << std::endl;
             std::exit(EXIT_FAILURE);
@@ -61,7 +71,7 @@ namespace param_helper {
 
             void merge_to_file(const std::string &directory, const std::string &filename,
                                const bool relative_path = true) {
-                std::cout << "Merging to file..." << std::endl;
+                // std::cout << "Merging to file..." << std::endl;
                 json k = fs::read_parameter_file(directory, filename, relative_path);
                 params = merge(k, params);
                 write_to_file(directory, filename, relative_path);
@@ -179,7 +189,7 @@ auto recursive_find(json& j, UnaryFunction f)
         }
         else
         {
-            std::cout << "Running parameter not found" << std::endl;
+            std::cerr << "Running parameter not found" << std::endl;
             std::exit(EXIT_FAILURE);
             return j.end();
         }
