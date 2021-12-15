@@ -107,7 +107,7 @@ namespace param_helper {
             std::ifstream i(path + "/" + filename + ".json");
             json k;
             i >> k;
-            std::cout << "Simulation file '" << filename << "' loaded" << std::endl;
+            // std::cout << "Simulation file '" << filename << "' loaded" << std::endl;
             close(fd);
             return k;
         }
