@@ -37,16 +37,16 @@ add_library(paramhelper::paramhelper ALIAS paramhelper)
 # Install targets and configuration
 install(
   TARGETS paramhelper
-  EXPORT ParamHelper-config
+  EXPORT paramhelper-config
   RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
   LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
   ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
 )
 
 install(
-  EXPORT ParamHelper-config
-  NAMESPACE ParamHelper::
-  DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/ParamHelper
+  EXPORT paramhelper-config
+  NAMESPACE paramhelper::
+  DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/paramhelper
 )
 
 install(

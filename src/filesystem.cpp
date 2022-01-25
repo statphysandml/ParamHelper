@@ -1,49 +1,7 @@
-//
-// Created by lukas on 28.11.20.
-//
-
 #include "../include/param_helper/filesystem.hpp"
 
 namespace param_helper {
     namespace fs {
-
-        std::string prfs::relative_path_to_project_root_dir = "./";
-
-        std::string prfs::path_to_executable() {
-            char cCurrentPath[FILENAME_MAX];
-
-            if (!GetCurrentDir(cCurrentPath, sizeof(cCurrentPath)))
-                return std::to_string(errno);
-
-            cCurrentPath[sizeof(cCurrentPath) - 1] = '\0'; // not really required
-
-            //printf ("The current working directory is %s", cCurrentPath);
-            std::string cp = std::string(cCurrentPath);
-
-            // std::cout << cp << std::endl;
-            return cp;
-        }
-
-        std::string prfs::project_root() {
-            return path_to_executable() + "/" + relative_path_to_project_root_dir;
-        }
-
-        void prfs::set_relative_path_to_project_root_dir(const std::string relative_path_to_project_root_dir_) {
-            relative_path_to_project_root_dir = relative_path_to_project_root_dir_;
-        }
-
-        std::string prfs::get_relative_path_to_project_root_dir() {
-            return relative_path_to_project_root_dir;
-        }
-
-        std::string prfs::get_path_to(const std::string directory, const bool relative_path)
-        {
-            if(relative_path)
-                return prfs::project_root() + "/" + directory + "/";
-            else
-                return directory;
-        }
-
         bool fexists(const std::string& path) {
             std::ifstream ifile(path.c_str());
             return (bool)ifile;
@@ -77,7 +35,7 @@ namespace param_helper {
 
         void generate_directory_if_not_present(const std::string directory, const bool relative_path)
         {
-            std::string path = prfs::get_path_to(directory, relative_path);
+            std::string path = param_helper::proj::get_path_to(directory, relative_path);
 
             if(not direxists(path))
                 makedir(path);
@@ -85,14 +43,14 @@ namespace param_helper {
 
         bool check_if_parameter_file_exists(const std::string directory, const std::string filename, const bool relative_path)
         {
-            std::string path = prfs::get_path_to(directory, relative_path);
+            std::string path = param_helper::proj::get_path_to(directory, relative_path);
             // std::cout << "Check for existence of " << filename << ".json in: " << path << std::endl;
             return fexists(path + "/" + filename + ".json");
         }
 
         json read_parameter_file(const std::string directory, const std::string filename, const bool relative_path)
         {
-            std::string path = prfs::get_path_to(directory, relative_path);
+            std::string path = param_helper::proj::get_path_to(directory, relative_path);
 
             int fd;
             fd = open(path.c_str(), O_RDWR | O_CREAT, 0666);
@@ -114,7 +72,7 @@ namespace param_helper {
 
         void write_parameter_file(json parameters, const std::string directory, const std::string filename, const bool relative_path)
         {
-            std::string path = prfs::get_path_to(directory, relative_path);
+            std::string path = param_helper::proj::get_path_to(directory, relative_path);
             // std::cout << "Writing parameter file into:" << path << std::endl;
 
             // std::cout << "\t-> Parameters: " << parameters << std::endl;

@@ -173,6 +173,7 @@ cython_debug/
 # Customized
 
 .idea/
+.vscode/
 lib/*
 !lib/README.txt
 examples/*
