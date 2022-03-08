@@ -55,7 +55,7 @@ private:
 int main() {
     std::cout << "\n### Actual use case with file system exchange ###\n" << std::endl;
 
-    std::cout << "Current directory: " << param_helper::fs::prfs::project_root() << std::endl;
+    std::cout << "Current directory: " << param_helper::proj::project_root() << std::endl;
 
     // Generate parameters and write them to file
     RectangleParameters rp(2.0, 3.0);

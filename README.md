@@ -120,8 +120,8 @@ private:
 ```
 Access on the parameters is provided by the member variable rp. The class Reactangle can be used as follows:
 ```c++
-// The project root can be adapted by params_helper::prfs::set_relative_path_to_project_root_dir
-std::cout << "Current directory: " << param_helper::fs::prfs::project_root() << std::endl;
+// The project root can be adapted by params_helper::proj::set_relative_path_to_project_root_dir
+std::cout << "Current directory: " << param_helper::proj::project_root() << std::endl;
 
 // Generate parameters and write them to file
 RectangleParameters rp(2.0, 3.0);
