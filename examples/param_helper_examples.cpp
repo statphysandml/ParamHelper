@@ -1,7 +1,3 @@
-//
-// Created by lukas on 07.12.20.
-//
-
 #include <iostream>
 #include <param_helper/params.hpp>
 
