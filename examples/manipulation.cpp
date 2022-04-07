@@ -4,7 +4,7 @@
 using namespace param_helper::params;
 
 
-// Execute with: g++ manipulation.cpp -I ../include/ ../lib/libparamhelper.a -o manipulation
+// Execute with: g++ manipulation.cpp -I ../include/ ../build/src/libparamhelper.a -o manipulation
 
 
 int main() {

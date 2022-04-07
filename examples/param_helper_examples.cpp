@@ -46,7 +46,7 @@ private:
 };
 
 
-// Execute with: g++ all_examples.cpp -I ../include/ ../lib/libparamhelper.a -o all_examples
+// Execute with: g++ param_helper_examples.cpp -I ../include/ ../build/src/libparamhelper.a -o param_helper_examples
 
 
 int main() {

@@ -45,7 +45,7 @@ private:
 };
 
 
-// Execute with: g++ use_case_multiple_parameters.cpp -I ../include/ ../lib/libparamhelper.a -o use_case_multiple_parameters
+// Execute with: g++ use_case_multiple_parameters.cpp -I ../include/ ../build/src/libparamhelper.a -o use_case_multiple_parameters
 
 
 int main() {

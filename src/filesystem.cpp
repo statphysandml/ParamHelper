@@ -2,12 +2,12 @@
 
 namespace param_helper {
     namespace fs {
-        bool fexists(const std::string& path) {
+        bool fexists(const std::string path) {
             std::ifstream ifile(path.c_str());
             return (bool)ifile;
         }
 
-        bool direxists(const std::string& path) {
+        bool direxists(const std::string path) {
             struct stat sb{};
             if (stat(path.c_str(), &sb) != 0 && !S_ISDIR(sb.st_mode))
                 return false;
@@ -15,7 +15,7 @@ namespace param_helper {
                 return true;
         }
 
-        void makedir(const std::string& path)
+        void makedir(const std::string path)
         {
             // Check if parent path exists
             std::size_t found = path.find_last_of("/\\");

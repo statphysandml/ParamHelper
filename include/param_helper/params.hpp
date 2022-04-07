@@ -15,14 +15,6 @@ using json = nlohmann::json;
 namespace param_helper {
     namespace params {
 
-        /** @brief Merge function
-         *
-         * To be continued...
-         *
-         * @param a ...
-         * @param b ...
-         * @returns ...
-         */
         json merge(const json &a, const json &b);
 
         template<typename T>
@@ -37,12 +29,12 @@ namespace param_helper {
 
         json subtract(const json &a, const json &b);  // (a- b)
 
-        bool construct_parameter_path(json &j, const std::string &parameter, std::vector<std::string> &parameter_path);
+        bool construct_parameter_path(json &j, const std::string parameter, std::vector<std::string> &parameter_path);
 
         template<typename T>
-        static T entry_by_key(const json &params_, const std::string key) {
-            auto it_find = params_.find(key);
-            if (it_find != params_.end())
+        static T entry_by_key(const json &params, const std::string key) {
+            auto it_find = params.find(key);
+            if (it_find != params.end())
                 return it_find->get<T>();
             std::cerr << "ERROR: Parameter '" << key
                       << "' not found. Check if parameter is set per default in corresponding class or set parameter manually."
@@ -54,26 +46,26 @@ namespace param_helper {
         public:
             Parameters() = default;
 
-            explicit Parameters(const json params_) : params(params_) {}
+            explicit Parameters(const json params) : params_(params) {}
 
-            static Parameters create_by_params(const json params_) {
-                return Parameters(params_);
+            static Parameters create_by_params(const json params) {
+                return Parameters(params);
             }
 
-            static Parameters create_by_file(const std::string &directory, const std::string &filename) {
+            static Parameters create_by_file(const std::string directory, const std::string filename) {
                 return Parameters(fs::read_parameter_file(directory, filename));
             }
 
             void write_to_file(const std::string directory, const std::string filename,
                                const bool relative_path = true) const {
-                fs::write_parameter_file(params, directory, filename, relative_path);
+                fs::write_parameter_file(params_, directory, filename, relative_path);
             }
 
-            void merge_to_file(const std::string &directory, const std::string &filename,
+            void merge_to_file(const std::string directory, const std::string filename,
                                const bool relative_path = true) {
                 // std::cout << "Merging to file..." << std::endl;
                 json k = fs::read_parameter_file(directory, filename, relative_path);
-                params = merge(k, params);
+                params_ = merge(k, params_);
                 write_to_file(directory, filename, relative_path);
             }
 
@@ -82,7 +74,7 @@ namespace param_helper {
             void append_parameters(const params_T parameters_wrapper) {
                 json parameters_with_identifiers;
                 parameters_with_identifiers[parameters_wrapper.name()] = parameters_wrapper.get_json();
-                params = merge(params, parameters_with_identifiers);
+                params_ = merge(params_, parameters_with_identifiers);
             }
 
             template<typename params_T>
@@ -90,18 +82,18 @@ namespace param_helper {
                 json parameters;
                 parameters[global_identifier] = parameters_wrapper.get_json();
                 parameters[global_identifier]["name"] = parameters_wrapper.name();
-                params = merge(params, parameters);
+                params_ = merge(params_, parameters);
             }
 
             template<typename T>
             T get_entry(const std::string key) const {
-                return entry_by_key<T>(params, key);
+                return entry_by_key<T>(params_, key);
             }
 
             template<typename T>
             T get_entry(const std::string key, const T default_val) const {
-                auto it_find = params.find(key);
-                if (it_find != params.end())
+                auto it_find = params_.find(key);
+                if (it_find != params_.end())
                     return it_find->get<T>();
                 else
                     return default_val;
@@ -109,8 +101,8 @@ namespace param_helper {
 
             template<typename T>
             T get_entry(const std::string key, const T default_val, const bool set_default = true) {
-                auto it_find = params.find(key);
-                if (it_find != params.end())
+                auto it_find = params_.find(key);
+                if (it_find != params_.end())
                     return it_find->get<T>();
                 else {
                     if (set_default) add_entry(key, default_val);
@@ -119,29 +111,29 @@ namespace param_helper {
             }
 
             bool haskey(const std::string key) {
-                auto it_find = params.find(key);
-                return it_find != params.end();
+                auto it_find = params_.find(key);
+                return it_find != params_.end();
             }
 
             template<typename T>
             void add_entry(const std::string key, const T val) {
-                params[key] = val;
+                params_[key] = val;
             }
 
             void delete_entry(const std::string key) {
-                params.erase(key);
+                params_.erase(key);
             }
 
             const json get_json() const {
-                return params;
+                return params_;
             }
 
             json &get_json() {
-                return params;
+                return params_;
             }
 
         protected:
-            json params;
+            json params_;
         };
     }
 }

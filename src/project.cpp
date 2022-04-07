@@ -3,7 +3,7 @@
 namespace param_helper {
     namespace proj {
 
-        std::string relative_path_to_project_root_dir = "./";
+        std::string g_relative_path_to_project_root_dir = "./";
 
         std::string path_to_executable() {
             char cCurrentPath[FILENAME_MAX];
@@ -21,15 +21,16 @@ namespace param_helper {
         }
 
         std::string project_root() {
-            return path_to_executable() + "/" + relative_path_to_project_root_dir;
+            return path_to_executable() + "/" + g_relative_path_to_project_root_dir;
         }
 
-        void set_relative_path_to_project_root_dir(const std::string relative_path_to_project_root_dir_) {
-            relative_path_to_project_root_dir = relative_path_to_project_root_dir_;
+        void set_relative_path_to_project_root_dir(const std::string relative_path_to_project_root_dir) {
+            g_relative_path_to_project_root_dir = relative_path_to_project_root_dir;
+            std::cout << " -- Setting relative path to project root dir to '" << relative_path_to_project_root_dir << "', resulting in '" << project_root() << "' as absolute project root dir --" << std::endl;
         }
 
         std::string get_relative_path_to_project_root_dir() {
-            return relative_path_to_project_root_dir;
+            return g_relative_path_to_project_root_dir;
         }
 
         std::string get_path_to(const std::string directory, const bool relative_path)

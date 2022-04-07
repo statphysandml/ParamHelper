@@ -21,13 +21,13 @@ using json = nlohmann::json;
 
 namespace param_helper {
     namespace proj {
-        extern std::string relative_path_to_project_root_dir;
+        extern std::string g_relative_path_to_project_root_dir;
 
         std::string path_to_executable();
 
         std::string project_root();
 
-        void set_relative_path_to_project_root_dir(const std::string relative_path_to_project_root_dir_);
+        void set_relative_path_to_project_root_dir(const std::string relative_path_to_project_root_dir);
 
         std::string get_relative_path_to_project_root_dir();
 

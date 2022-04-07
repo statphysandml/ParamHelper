@@ -17,11 +17,11 @@ using json = nlohmann::json;
 namespace param_helper
 {
     namespace fs {
-        bool fexists(const std::string& path);
+        bool fexists(const std::string path);
 
-        bool direxists(const std::string& path);
+        bool direxists(const std::string path);
 
-        void makedir(const std::string& path);
+        void makedir(const std::string path);
 
         void generate_directory_if_not_present(const std::string directory, const bool relative_path=true);
 

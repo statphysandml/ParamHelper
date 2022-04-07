@@ -1,4 +1,5 @@
 #include "param_helper/params.hpp"
+#include "param_helper/project.hpp"
 
 
 using namespace param_helper::params;
@@ -45,7 +46,7 @@ private:
 };
 
 
-// Execute with: g++ use_case.cpp -I ../include/ ../lib/libparamhelper.a -o use_case
+// Execute with: g++ use_case.cpp -I ../include/ ../build/src/libparamhelper.a -o use_case
 
 
 int main() {

@@ -34,7 +34,7 @@ namespace param_helper {
         }
 
 
-        bool construct_parameter_path(json& j, const std::string& parameter, std::vector<std::string>& parameter_path)
+        bool construct_parameter_path(json& j, const std::string parameter, std::vector<std::string>& parameter_path)
         {
             if(j.is_structured())
             {
