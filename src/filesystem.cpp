@@ -8,11 +8,10 @@ namespace param_helper {
         }
 
         bool direxists(const std::string path) {
-            struct stat sb{};
-            if (stat(path.c_str(), &sb) != 0 && !S_ISDIR(sb.st_mode))
-                return false;
-            else
+            if(std::filesystem::is_directory(path))
                 return true;
+            else
+                return false;
         }
 
         void makedir(const std::string path)
@@ -25,18 +24,14 @@ namespace param_helper {
             if(not direxists(path)) {
                 // std::cout << "Generate directory: " << path << std::endl;
                 // Generate directory
-                const int dir_err = mkdir(path.c_str(), S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
-                if (-1 == dir_err) {
-                    printf("Error creating directory!\n");
-                    exit(1);
-                }
+                std::filesystem::create_directory(path);
             }
         }
 
         void generate_directory_if_not_present(const std::string directory, const bool relative_path)
         {
             std::string path = param_helper::proj::get_path_to(directory, relative_path);
-
+            
             if(not direxists(path))
                 makedir(path);
         }
@@ -52,21 +47,15 @@ namespace param_helper {
         {
             std::string path = param_helper::proj::get_path_to(directory, relative_path);
 
-            int fd;
-            fd = open(path.c_str(), O_RDWR | O_CREAT, 0666);
-            flock(fd, LOCK_EX/* | LOCK_NB*/); // grab exclusive lock, fail if can't obtain.
-
-            struct stat sb;
-            if (stat((path + "/" + filename + ".json").c_str(), &sb) != 0)
+            if(not std::filesystem::is_regular_file(path + "/" + filename + ".json"))
             {
                 std::cerr << "File does not exist: " << path + "/" + filename + ".json" << std::endl;
                 std::exit(EXIT_FAILURE);
             }
+
             std::ifstream i(path + "/" + filename + ".json");
             json k;
             i >> k;
-            // std::cout << "Simulation file '" << filename << "' loaded" << std::endl;
-            close(fd);
             return k;
         }
 

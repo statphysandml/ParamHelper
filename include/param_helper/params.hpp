@@ -4,8 +4,6 @@
 #include <iostream>
 #include <fstream>
 #include <complex>
-#include <sys/file.h>
-#include <sys/stat.h>
 
 #include "json.hpp"
 #include "filesystem.hpp"
