@@ -14,7 +14,7 @@ Prerequisites
 
 Building ParamHelper requires the following software installed:
 
-* A C++17-compliant compiler
+* A C++17-compliant compiler (for g++>=9)
 * CMake `>= 3.15`
 * Doxygen (optional, documentation building is skipped if missing)
 <!--- * The testing framework [Catch2](https://github.com/catchorg/Catch2) for building the test suite. The framework is included as an external submodule which can be integrated by cloning the respository with -->
