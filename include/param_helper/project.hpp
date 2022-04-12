@@ -1,17 +1,10 @@
 #ifndef PARAMHELPER_PROJECT_HPP
 #define PARAMHELPER_PROJECT_HPP
 
-#ifdef WINDOWS
-#include <direct.h>
-    #define GetCurrentDir _getcwd
-#else
-#include <unistd.h>
-#define GetCurrentDir getcwd
-#endif
-
 #include <iostream>
 #include <fstream>
 #include <clocale>
+#include <filesystem>
 
 #include "json.hpp"
 
@@ -20,8 +13,6 @@ using json = nlohmann::json;
 namespace param_helper {
     namespace proj {
         extern std::string g_relative_path_to_project_root_dir;
-
-        std::string path_to_executable();
 
         std::string project_root();
 

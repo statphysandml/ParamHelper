@@ -5,23 +5,8 @@ namespace param_helper {
 
         std::string g_relative_path_to_project_root_dir = "./";
 
-        std::string path_to_executable() {
-            char cCurrentPath[FILENAME_MAX];
-
-            if (!GetCurrentDir(cCurrentPath, sizeof(cCurrentPath)))
-                return std::to_string(errno);
-
-            cCurrentPath[sizeof(cCurrentPath) - 1] = '\0'; // not really required
-
-            //printf ("The current working directory is %s", cCurrentPath);
-            std::string cp = std::string(cCurrentPath);
-
-            // std::cout << cp << std::endl;
-            return cp;
-        }
-
         std::string project_root() {
-            return path_to_executable() + "/" + g_relative_path_to_project_root_dir;
+            return std::filesystem::current_path().string() + "/" + g_relative_path_to_project_root_dir;
         }
 
         void set_relative_path_to_project_root_dir(const std::string relative_path_to_project_root_dir) {
