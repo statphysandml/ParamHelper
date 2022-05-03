@@ -69,17 +69,17 @@ namespace param_helper {
 
             // Never used? -> at least not by LatticeModelImplementations
             template<typename params_T>
-            void append_parameters(const params_T parameters_wrapper) {
-                json parameters_with_identifiers;
-                parameters_with_identifiers[parameters_wrapper.name()] = parameters_wrapper.get_json();
-                params_ = merge(params_, parameters_with_identifiers);
+            void append_parameters(const params_T& parameters_wrapper) {
+                json parameters;
+                parameters[parameters_wrapper.name()] = parameters_wrapper.get_json();
+                params_ = merge(params_, parameters);
             }
 
             template<typename params_T>
-            void append_parameters(const params_T parameters_wrapper, std::string global_identifier) {
+            void append_parameters(const params_T& parameters_wrapper, std::string global_identifier) {
                 json parameters;
                 parameters[global_identifier] = parameters_wrapper.get_json();
-                parameters[global_identifier]["name"] = parameters_wrapper.name();
+                // parameters[global_identifier]["name"] = parameters_wrapper.name();
                 params_ = merge(params_, parameters);
             }
 

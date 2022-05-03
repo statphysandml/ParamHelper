@@ -63,8 +63,8 @@ namespace param_helper {
         {
             std::string path = param_helper::proj::get_path_to(directory, relative_path);
             // std::cout << "Writing parameter file into:" << path << std::endl;
-
             // std::cout << "\t-> Parameters: " << parameters << std::endl;
+            generate_directory_if_not_present(path, false);
 
             std::ofstream o(path + filename + ".json");
             o << std::setw(4) << parameters << std::endl;
