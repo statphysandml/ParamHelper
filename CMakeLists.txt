@@ -9,14 +9,17 @@ include(GNUInstallDirs)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-
-
 # Compilation options
 set(BUILD_DOCS ON CACHE BOOL "Enable building of documentation")
 
+# Add nlohmann json
+include(FetchContent)
+
+FetchContent_Declare(json URL https://github.com/nlohmann/json/releases/download/v3.10.5/json.tar.xz)
+FetchContent_MakeAvailable(json)
+
 # compile the library
 add_subdirectory(src)
-
 
 # compile the tests
 include(CTest)
@@ -53,6 +56,9 @@ install(
   DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/include/
   DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
 )
+
+install(FILES ${json_SOURCE_DIR}/single_include/nlohmann/json.hpp
+        DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/nlohmann/)
 
 # This prints a summary of found dependencies
 include(FeatureSummary)

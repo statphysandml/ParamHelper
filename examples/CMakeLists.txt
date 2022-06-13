@@ -11,13 +11,11 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # Include libraries
-find_library(ParamHelper NAMES libparamhelper.a PATHS ../build/src)
-message("ParamHelper = ${ParamHelper}")
-include_directories(../include/)
+find_package(ParamHelper CONFIG REQUIRED)
 
 # This prints a summary of found dependencies
 include(FeatureSummary)
 feature_summary(WHAT ALL)
 
 add_executable(ParamHelperExamples param_helper_examples.cpp)
-target_link_libraries(ParamHelperExamples PUBLIC ${ParamHelper})
+target_link_libraries(ParamHelperExamples PUBLIC paramhelper::paramhelper)

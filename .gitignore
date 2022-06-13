@@ -176,6 +176,7 @@ cython_debug/
 .vscode/
 lib/*
 !lib/README.txt
+install/
 examples/*
 !examples/param_helper_examples.cpp
 !examples/manipulation.cpp

@@ -6,7 +6,7 @@
 #include <clocale>
 #include <filesystem>
 
-#include "json.hpp"
+#include <nlohmann/json.hpp>
 
 using json = nlohmann::json;
 

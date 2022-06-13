@@ -7,9 +7,9 @@
 #include <clocale>
 #include <filesystem>
 
-#include "project.hpp"
+#include <param_helper/project.hpp>
 
-#include "json.hpp"
+#include <nlohmann/json.hpp>
 
 using json = nlohmann::json;
 

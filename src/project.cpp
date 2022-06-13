@@ -1,4 +1,4 @@
-#include "../include/param_helper/project.hpp"
+#include <param_helper/project.hpp>
 
 namespace param_helper {
     namespace proj {

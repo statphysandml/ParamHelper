@@ -40,6 +40,16 @@ which can be set by adding `-D<var>={ON, OFF}` to the `cmake` call:
 * `BUILD_TESTING`: Enable building of the test suite (default: `ON`)
 * `BUILD_DOCS`: Enable building the documentation (default: `ON`)
 
+Installation
+------------
+
+The library can be installed locally by running:
+
+```
+cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=./../install ..
+make install
+```
+
 <!---
 Documentation
 --------
@@ -55,7 +65,7 @@ Possible use cases of the library can be best understood through examples, which
 ```
 mkdir build
 cd build
-cmake -DCMAKE_BUILD_TYPE=Release ..
+cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH=~/ParamHelper/install ..
 cmake --build .
 ```
 
@@ -67,7 +77,7 @@ The code can be executed by running
 
 The example is explained in the following in more detail.
 
-Use case: We want to manange the parameters of a class Rectangle that can be used to compute the area of a rectangle.
+Use case: We want to manage the parameters of a class Rectangle that can be used to compute the area of a rectangle.
 
 
 The class RectangleParameter contains all parameters that are supossed to be tracked:
@@ -161,14 +171,19 @@ Usage
 
 g++:
 ```bash
-g++ param_helper_examples.cpp -I {path-to-ParamHelper/include/} {path-to-ParamHelper/lib/libparamhelper.a} -o main
+g++ param_helper_examples.cpp -I ~/ParamHelper/install/include/ ~/ParamHelper/install/lib/libparamhelper.a -o main
 ```
 
 cmake (CMakeLists.txt):
+
 ```cmake
-find_library(ParamHelper NAMES libparamhelper.a PATHS {path-to-ParamHelper/lib/`})
-include_directories({path-to-ParamHelper/include/})
-target_link_libraries(MAIN ${ParamHelper})
+find_package(ParamHelper CONFIG REQUIRED)
+```
+
+Note that, if installed locally, the CMAKE_PREFIX_PATH must be set when calling cmake, for example:
+
+```cmake
+cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH=~/ParamHelper/install ..
 ```
 
 Further Examples
