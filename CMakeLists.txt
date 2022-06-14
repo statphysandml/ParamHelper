@@ -15,7 +15,11 @@ set(BUILD_DOCS ON CACHE BOOL "Enable building of documentation")
 # Add nlohmann json
 include(FetchContent)
 
-FetchContent_Declare(json URL https://github.com/nlohmann/json/releases/download/v3.10.5/json.tar.xz)
+FetchContent_Declare(json
+  GIT_REPOSITORY https://github.com/ArthurSonzogni/nlohmann_json_cmake_fetchcontent
+  GIT_PROGRESS TRUE
+  GIT_SHALLOW TRUE
+  GIT_TAG v3.0.0)
 FetchContent_MakeAvailable(json)
 
 # compile the library
@@ -57,7 +61,7 @@ install(
   DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
 )
 
-install(FILES ${json_SOURCE_DIR}/single_include/nlohmann/json.hpp
+install(FILES ${json_SOURCE_DIR}/include/nlohmann/json.hpp
         DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/nlohmann/)
 
 # This prints a summary of found dependencies
