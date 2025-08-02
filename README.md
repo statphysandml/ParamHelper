@@ -7,71 +7,88 @@ ParamHelper: Track your simulation
 [![codecov](https://codecov.io/gh/statphysandml/ParamHelper/branch/main/graph/badge.svg)](https://codecov.io/gh/statphysandml/ParamHelper)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=statphysandml_ParamHelper&metric=alert_status)](https://sonarcloud.io/dashboard?id=statphysandml_ParamHelper) -->
 
-ParamHelper is a C++ library that allows an easy tracking of all parameters of a simulation. The parameters can easily be written to file and be loaded for a potential rerun of the simulation. An example provides a possible usage of the library. The core of the library makes use of JSON for Modern C++ from https://github.com/nlohmann/json.
+ParamHelper is a C++ library that allows easy tracking of all parameters of a simulation. The parameters can be written to file and loaded for a potential rerun of the simulation. The core of the library uses [JSON for Modern C++](https://github.com/nlohmann/json).
 
 Prerequisites
---------
+------------
 
-Building ParamHelper requires the following software installed:
+Building ParamHelper requires:
 
-* A C++17-compliant compiler (for g++>=9)
-* CMake `>= 3.15`
-* Doxygen (optional, documentation building is skipped if missing)
-<!--- * The testing framework [Catch2](https://github.com/catchorg/Catch2) for building the test suite. The framework is included as an external submodule which can be integrated by cloning the respository with -->
+* A C++17-compliant compiler (e.g., g++ >= 9)
+* CMake `>= 3.18`
+* Doxygen (optional, for documentation)
+* Python with Sphinx and Breathe (optional, for advanced documentation)
 
 Building ParamHelper
---------
+--------------------
 
-The following sequence of commands builds ParamHelper.
-It assumes that your current working directory is the top-level directory
-of the freshly cloned repository:
+The recommended way to build ParamHelper is with an out-of-source build:
 
-```
-git submodule update --init --recursive
-mkdir build
-cd build
-cmake -DCMAKE_BUILD_TYPE=Release ..
-cmake --build .
+```sh
+cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+cmake --build build
 ```
 
-The build process can be customized with the following CMake variables,
-which can be set by adding `-D<var>={ON, OFF}` to the `cmake` call:
+You can customize the build with these CMake variables (add as `-D<var>=ON|OFF`):
 
 * `BUILD_TESTING`: Enable building of the test suite (default: `ON`)
 * `BUILD_DOCS`: Enable building the documentation (default: `ON`)
 
+> **Note:** All dependencies (including Catch2 for testing and nlohmann_json for JSON support) are automatically downloaded using CMake's FetchContent.  
+> You do **not** need to initialize or update any git submodules.
+
 Installation
 ------------
 
-The library can be installed locally by running:
+To install the library locally:
 
-```
-cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=./../install ..
-make install
+```sh
+cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=~/ParamHelper/install
+cmake --build build --target install
 ```
 
-<!---
+If you install to a custom location, set `CMAKE_PREFIX_PATH` when using ParamHelper in other projects:
+
+```sh
+cmake -S . -B build -DCMAKE_PREFIX_PATH=~/ParamHelper/install
+```
+
+Testing
+-------
+
+To build and run the test suite:
+
+```sh
+cmake -S . -B build -DBUILD_TESTING=ON
+cmake --build build
+cd build
+ctest
+```
+
 Documentation
---------
+-------------
 
-ParamHelper provides a Sphinx-based documentation, that can
-be browsed [online at readthedocs.org](https://ParamHelper.readthedocs.io). -->
+To build the documentation (requires Doxygen and Sphinx):
+
+```sh
+cmake -S . -B build -DBUILD_DOCS=ON
+cmake --build build --target paramhelper_doxygen
+cmake --build build --target paramhelper-sphinx-doc
+```
 
 Examples
 --------
 
-Possible use cases of the library can be best understood through examples, which can be found in the examples/ directory. After a navigation into the this directory, the following sequence of commands builds the ParamHelperExamples executable (based on param_helper_examples.cpp) containing all other examples as well. The other examples can be executed by replacing the cpp file in the CMakeLists.txt file.
+Example use cases can be found in the `examples/` directory. To build the examples:
 
-```
-mkdir build
-cd build
-cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH=~/ParamHelper/install ..
-cmake --build .
+```sh
+cmake -S examples -B examples/build -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH=~/ParamHelper/install
+cmake --build examples/build
 ```
 
-The code can be executed by running
+Run the example with:
 
-```
+```sh
 ./ParamHelperExamples
 ```
 
@@ -169,21 +186,21 @@ In the example, a json file "rectangle_parameters.json" has been stored in the d
 Usage
 -----
 
-g++:
-```bash
+**With g++:**
+```sh
 g++ param_helper_examples.cpp -I ~/ParamHelper/install/include/ ~/ParamHelper/install/lib/libparamhelper.a -o main
 ```
 
-cmake (CMakeLists.txt):
-
+**With CMake (CMakeLists.txt):**
 ```cmake
 find_package(ParamHelper CONFIG REQUIRED)
+target_link_libraries(your_target PRIVATE paramhelper::paramhelper)
 ```
 
-Note that, if installed locally, the CMAKE_PREFIX_PATH must be set when calling cmake, for example:
+If installed locally, set `CMAKE_PREFIX_PATH` when calling CMake:
 
-```cmake
-cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH=~/ParamHelper/install ..
+```sh
+cmake -S . -B build -DCMAKE_PREFIX_PATH=~/ParamHelper/install
 ```
 
 Further Examples
@@ -272,6 +289,4 @@ Support and Development
 
 The project was generated with the help of the [cookiecutter-cpp-project](https://github.com/ssciwr/cookiecutter-cpp-project) of the [Scientific Software Center, IWR, Heidelberg University](https://ssc.iwr.uni-heidelberg.de/).
 
-For bug reports/suggestions/complaints please file an issue on GitHub.
-
-Or start a discussion on our mailing list: statphysandml@thphys.uni-heidelberg.de.
+For bug reports/suggestions/complaints please file an issue on GitHub or start a discussion on our mailing list: statphysandml@thphys.uni-heidelberg.de.
