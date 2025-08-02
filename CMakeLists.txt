@@ -1,55 +1,52 @@
-cmake_minimum_required(VERSION 3.15)
+cmake_minimum_required(VERSION 3.18)
 
 project(ParamHelper VERSION 0.0.1 LANGUAGES CXX)
 
-# Initialize some default paths
-include(GNUInstallDirs)
-
-# Define the minimum C++ standard that is required
+# Set C++ standard
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
-# Compilation options
-set(BUILD_DOCS ON CACHE BOOL "Enable building of documentation")
+# Install directories
+include(GNUInstallDirs)
 
-# Add nlohmann json
+# Fetch nlohmann_json (modern FetchContent usage)
 include(FetchContent)
-
-FetchContent_Declare(json
+FetchContent_Declare(
+  json
   GIT_REPOSITORY https://github.com/ArthurSonzogni/nlohmann_json_cmake_fetchcontent
-  GIT_PROGRESS TRUE
+  GIT_TAG v3.0.0
   GIT_SHALLOW TRUE
-  GIT_TAG v3.0.0)
+)
 FetchContent_MakeAvailable(json)
 
-# compile the library
+# Add the src directory, which defines the paramhelper target
 add_subdirectory(src)
 
-# compile the tests
+# Alias for downstream usage
+add_library(paramhelper::paramhelper ALIAS paramhelper)
+
+# Testing
 include(CTest)
 if(BUILD_TESTING)
-  if(NOT TARGET Catch2)
-    add_subdirectory(ext/Catch2)
-    include(./ext/Catch2/contrib/Catch.cmake)
-  endif()
   add_subdirectory(tests)
 endif()
 
+# Documentation (optional)
+option(BUILD_DOCS "Enable building of documentation" ON)
 if(BUILD_DOCS)
-  # Add the documentation
   add_subdirectory(doc)
 endif()
 
-# Add an alias target for use if this project is included as a subproject in another project
-add_library(paramhelper::paramhelper ALIAS paramhelper)
+# === Installation ===
 
-# Install targets and configuration
 install(
   TARGETS paramhelper
   EXPORT paramhelper-config
   RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
   LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
   ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+  INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
 )
 
 install(
@@ -63,9 +60,11 @@ install(
   DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
 )
 
-install(FILES ${json_SOURCE_DIR}/include/nlohmann/json.hpp
-        DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/nlohmann/)
+install(
+  FILES ${json_SOURCE_DIR}/include/nlohmann/json.hpp
+  DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/nlohmann/
+)
 
-# This prints a summary of found dependencies
+# Feature summary
 include(FeatureSummary)
 feature_summary(WHAT ALL)
