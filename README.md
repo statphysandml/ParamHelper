@@ -43,14 +43,14 @@ Installation
 To install the library locally:
 
 ```sh
-cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=~/ParamHelper/install
+cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$HOME/local
 cmake --build build --target install
 ```
 
 If you install to a custom location, set `CMAKE_PREFIX_PATH` when using ParamHelper in other projects:
 
 ```sh
-cmake -S . -B build -DCMAKE_PREFIX_PATH=~/ParamHelper/install
+cmake -S . -B build -DCMAKE_PREFIX_PATH=$HOME/local
 ```
 
 Testing
@@ -82,7 +82,7 @@ Examples
 Example use cases can be found in the `examples/` directory. To build the examples:
 
 ```sh
-cmake -S examples -B examples/build -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH=~/ParamHelper/install
+cmake -S examples -B examples/build -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH=$HOME/local
 cmake --build examples/build
 ```
 
@@ -188,7 +188,7 @@ Usage
 
 **With g++:**
 ```sh
-g++ param_helper_examples.cpp -I ~/ParamHelper/install/include/ ~/ParamHelper/install/lib/libparamhelper.a -o main
+g++ param_helper_examples.cpp -I $HOME/local/include/ $HOME/local/lib/libparamhelper.a -o main
 ```
 
 **With CMake (CMakeLists.txt):**
@@ -200,7 +200,7 @@ target_link_libraries(your_target PRIVATE paramhelper::paramhelper)
 If installed locally, set `CMAKE_PREFIX_PATH` when calling CMake:
 
 ```sh
-cmake -S . -B build -DCMAKE_PREFIX_PATH=~/ParamHelper/install
+cmake -S . -B build -DCMAKE_PREFIX_PATH=$HOME/local
 ```
 
 Further Examples

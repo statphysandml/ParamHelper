@@ -9,12 +9,8 @@ FetchContent_MakeAvailable(Catch2)
 
 add_executable(paramhelper_tests tests.cpp ParamHelper_t.cpp)
 
-target_include_directories(paramhelper_tests PRIVATE
-    ${CMAKE_SOURCE_DIR}/include
-    ${json_SOURCE_DIR}/include
-)
-
-target_link_libraries(paramhelper_tests PRIVATE
+target_link_libraries(paramhelper_tests
+  PRIVATE
     paramhelper
     Catch2::Catch2
 )
