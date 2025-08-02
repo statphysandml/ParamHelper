@@ -13,10 +13,22 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 # Handle nlohmann_json dependency
 if(PARAMHELPER_USE_SYSTEM_JSON)
-    find_package(nlohmann_json REQUIRED)
-    set(JSON_TARGET nlohmann_json::nlohmann_json)
+    # Check if JSON_INCLUDE_DIR is provided by the superbuild
+    if(DEFINED JSON_INCLUDE_DIR)
+        message(STATUS "Using JSON include directory provided by superbuild: ${JSON_INCLUDE_DIR}")
+        # Simple interface library to handle the include directory
+        add_library(json_interface INTERFACE)
+        target_include_directories(json_interface INTERFACE ${JSON_INCLUDE_DIR})
+        set(JSON_TARGET json_interface)
+    else()
+        # Find system package
+        message(STATUS "Finding system nlohmann_json package")
+        find_package(nlohmann_json REQUIRED)
+        set(JSON_TARGET nlohmann_json::nlohmann_json)
+    endif()
 else()
-    # Download nlohmann_json at configure time
+    # Fetch our own copy
+    message(STATUS "Fetching nlohmann_json")
     include(FetchContent)
     FetchContent_Declare(
         nlohmann_json
@@ -24,24 +36,10 @@ else()
         GIT_TAG v3.11.2
     )
     FetchContent_MakeAvailable(nlohmann_json)
+    set(JSON_TARGET nlohmann_json::nlohmann_json)
     
-    # Create our own interface that doesn't need to be exported
-    add_library(paramhelper_json_dep INTERFACE)
-    target_include_directories(paramhelper_json_dep 
-        INTERFACE 
-            $<BUILD_INTERFACE:${nlohmann_json_SOURCE_DIR}/include>
-            # Important: This is how consumers will find the headers
-            $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
-    )
-    
-    # Install the nlohmann_json headers directly to include directory
-    # This ensures they're found alongside our own headers
-    install(
-        DIRECTORY ${nlohmann_json_SOURCE_DIR}/include/
-        DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
-    )
-    
-    set(JSON_TARGET paramhelper_json_dep)
+    # Note: When not using system JSON, we'll need to ensure the headers are installed
+    set(INSTALL_JSON_HEADERS TRUE)
 endif()
 
 # Define the library
@@ -80,6 +78,14 @@ install(
     DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
 )
 
+# If we fetched JSON and need to install the headers
+if(DEFINED INSTALL_JSON_HEADERS)
+    install(
+        DIRECTORY ${nlohmann_json_SOURCE_DIR}/include/
+        DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+    )
+endif()
+
 # Install library
 install(
     TARGETS paramhelper
@@ -90,10 +96,10 @@ install(
     INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
 )
 
-if(NOT PARAMHELPER_USE_SYSTEM_JSON)
-    # Add our bundled dependency to the exported targets
+# If using a custom JSON interface target, install it too
+if(PARAMHELPER_USE_SYSTEM_JSON AND DEFINED JSON_INCLUDE_DIR)
     install(
-        TARGETS paramhelper_json_dep
+        TARGETS json_interface
         EXPORT ${PROJECT_NAME}Targets
     )
 endif()
