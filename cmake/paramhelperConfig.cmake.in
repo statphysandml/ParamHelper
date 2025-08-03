@@ -2,14 +2,9 @@
 
 include(CMakeFindDependencyMacro)
 
-# Handle nlohmann_json dependency
-if(@PARAMHELPER_USE_SYSTEM_JSON@)
-    # Check if we used a custom include path provided by superbuild
-    if(NOT TARGET json_interface)
-        # We used the system package during build
-        find_dependency(nlohmann_json REQUIRED)
-    endif()
-    # Otherwise, json_interface target is already defined in the Targets file
+# Handle nlohmann_json dependency - only if we didn't export our own wrapper
+if(@PARAMHELPER_USE_SYSTEM_JSON@ AND NOT @EXPORT_JSON_TARGET@)
+    find_dependency(nlohmann_json REQUIRED)
 endif()
 
 # Include the exported targets
